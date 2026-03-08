@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مراجعة – Introduction to Information Security</title>
+    <title>مراجعة – أمن المعلومات</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap"
       rel="stylesheet"
@@ -124,7 +124,12 @@
 
       .toggle-wrap { position: fixed; top: 14px; left: 16px; z-index: 100; display: flex; align-items: center; }
       @media (max-width: 600px) {
-        .toggle-wrap { top: auto; bottom: 22px; left: 22px; }
+        .toggle-wrap { top: 8px; left: 8px; }
+        .ios-toggle { width: 52px; height: 26px; padding: 0 6px; }
+        .ios-toggle .icon-sun { font-size: 0.7rem; }
+        .ios-toggle .icon-moon { font-size: 0.65rem; }
+        .ios-knob { width: 20px; height: 20px; top: 2px; left: 2px; }
+        body.light .ios-knob { transform: translateX(26px); }
       }
       .ios-toggle {
         width: 72px; height: 34px; background: #1e2d45; border-radius: 999px;
@@ -228,7 +233,7 @@
       }
       .pill:not(:active) { animation: breathe 3.5s ease-in-out infinite; }
 
-      .main { max-width: 1140px; margin: 28px auto 100px; padding: 0 16px; }
+      .main { max-width: 1140px; margin: 28px auto 120px; padding: 0 16px; }
       .focus-banner {
         background: linear-gradient(135deg, rgba(0, 212, 180, 0.1), rgba(99, 102, 241, 0.1));
         border: 1px solid rgba(0, 212, 180, 0.2); border-radius: 12px; padding: 12px 18px;
@@ -370,7 +375,7 @@
 
       @media (max-width: 500px) {
         header h1 { font-size: 1.3rem; }
-        .hud { gap: 7px; }
+        .hud { gap: 7px; padding-left: 68px; }
         .hud-item { padding: 5px 9px; font-size: 0.78rem; }
         .results-card { padding: 24px 18px; }
         .results-stats { grid-template-columns: 1fr 1fr; }
@@ -417,8 +422,8 @@
     </div>
 
     <header>
-      <h1>📱 Introduction to Information Security</h1>
-      <p>مراجعة تفاعلية شاملة لمفاهيم أمن المعلومات والتهديدات</p>
+      <h1>📱 أمن المعلومات – الفصل الأول</h1>
+      <p>مراجعة تفاعلية لأساسيات أمن المعلومات (Introduction)</p>
       <div class="neuro-tip">🧠 تذكّر الإجابة في ذهنك أولاً ثم اسحب</div>
       <div class="progress"><div id="bar"></div></div>
     </header>
@@ -458,7 +463,7 @@
     <div class="footer">
       <div class="signature">🎓 إعداد: بدر الدوسري</div>
       <div style="font-style:italic">دعواتكم الصالحة في ظهر الغيب 🤲</div>
-      <div style="margin-top:10px;font-size:0.8rem">📚 Introduction to Information Security<br />جامعة الإمام محمد بن سعود الإسلامية</div>
+      <div style="margin-top:10px;font-size:0.8rem">📚 مقدمة في أمن المعلومات<br />جامعة الإمام محمد بن سعود الإسلامية</div>
     </div>
 
     <script>
@@ -533,245 +538,262 @@
          📚 البيانات 
       ══════════════════════════════════════ */
       const items = [
+        // Section 1: Basic Concepts & CIA Triad
         {
-          cat: "Computer Security Goals",
+          cat: "Chapter 1 – Basic Concepts",
           term: "🛡️ Information Security",
           rawTerm: "Information Security",
-          en: "The protection of resources from accidental or malicious modification, destruction, or disclosure.",
-          ar: "حماية الموارد (بما فيها البيانات والبرامج) من التعديل أو التدمير أو الإفشاء العرضي أو الخبيث.",
+          en: "The protection of resources (including data and programs) from accidental or malicious modification, destruction, or disclosure.",
+          ar: "حماية الموارد (البيانات والبرامج) من التعديل أو التدمير أو الإفشاء سواء كان مقصوداً أو عن طريق الخطأ.",
           slide: 2,
-          details: "• يعتبر أقفالاً لبوابة المستودع\n• حماية للأصول الأساسية\n• يمنع الوصول غير المصرح",
-          mnemonic: "تخيل إنك حاط ملفاتك في خزنة حديد ومقفل عليها محد يقربها."
+          details: "• المعلومة تعتبر سلعة للبيع والشراء\n• آليات الحماية تشبه وضع قفل على مستودع التاجر",
+          mnemonic: "تخيل إنك تحط قفل قوي على مستودع بضاعتك عشان محد يسرقها وتخسر تجارتك"
         },
         {
-          cat: "Computer Security Goals",
-          term: "🖥️ Computer Security",
+          cat: "Chapter 1 – Basic Concepts",
+          term: "💻 Computer Security",
           rawTerm: "Computer Security",
           en: "The effort to create a secure computing platform where agents can only perform allowed actions.",
-          ar: "بناء منصة حوسبة آمنة تضمن أن البرامج والمستخدمين لا ينفذون إلا الأوامر المسموحة لهم.",
+          ar: "إنشاء بيئة حوسبة آمنة تضمن أن المستخدمين والبرامج لا يقومون إلا بالأفعال المسموح لهم بها فقط.",
           slide: 3,
-          details: "• إنشاء منصة حوسبة آمنة\n• تحديد الصلاحيات بدقة\n• منع أي نشاط غير مرغوب",
-          mnemonic: "زي نظام البصمة على باب الشركة، اللي له صلاحية يدخل واللي ماله ينطرد."
+          details: "• يمنع الأفعال غير المصرح بها\n• يسمح بالأفعال المصرح بها",
+          mnemonic: "زي البودي جارد على باب قاعة الزواجات، يدخل المعازيم المسموح لهم ويطرد المتطفلين"
         },
         {
-          cat: "Computer Security Goals",
+          cat: "Chapter 1 – Basic Concepts",
           term: "🤫 Confidentiality",
           rawTerm: "Confidentiality",
           en: "Providing information access to those who are allowed to see the data.",
-          ar: "ضمان وصول المعلومات فقط للأشخاص المصرّح لهم برؤيتها (السرية).",
+          ar: "السرية: توفير الوصول للمعلومات فقط للأشخاص المصرح لهم ومنع وصولها للأشخاص الخطأ.",
           slide: 5,
-          details: "• يمنع وصول البيانات للشخص الخطأ\n• يحافظ على سرية المعلومات\n• يضمن وصولها للشخص الصحيح",
-          mnemonic: "سر بين اثنين، لو عرفه الثالث خربت."
+          details: "• تمنع المعلومات الأساسية من الوصول للأشخاص الخطأ\n• تتأكد من وصولها للأشخاص الصح",
+          mnemonic: "سوالفك الخاصة مع خويك بالواتس، ما تبغى أي أحد ثالث يقرأها"
         },
         {
-          cat: "Computer Security Goals",
-          term: "📦 Integrity",
+          cat: "Chapter 1 – Basic Concepts",
+          term: "✍️ Integrity",
           rawTerm: "Integrity",
-          en: "Methods for ensuring that data is real, accurate and safeguarded from unauthorized user modification.",
-          ar: "ضمان أن البيانات حقيقية ودقيقة ولم يتم التلاعب بها أو تغييرها بطريقة غير مصرحة (النزاهة).",
+          en: "Ensuring that data is real, accurate and safeguarded from unauthorized user modification.",
+          ar: "النزاهة والموثوقية: التأكد من أن البيانات دقيقة وحقيقية ولم يتم التعديل عليها من جهة غير مصرحة.",
           slide: 6,
-          details: "• يمنع التعديلات غير المصرحة\n• يضمن دقة البيانات\n• يتأكد من أصالة المصدر",
-          mnemonic: "زي ظرف البريد المختوم بالشمع الأحمر، لو انفك يبين."
+          details: "• يضمن أن مصدر المعلومة أصلي\n• يمنع التعديل غير المصرح به (مثل مهاجم يغير الرسالة في الطريق)",
+          mnemonic: "تخيل تطلب شاورما دجاج وتوصلك فلافل! هذا انعدام دقة وموثوقية في الطلب"
         },
         {
-          cat: "Computer Security Goals",
+          cat: "Chapter 1 – Basic Concepts",
           term: "🟢 Availability",
           rawTerm: "Availability",
           en: "The property in which information is accessible and modifiable when authorized users demand them.",
-          ar: "توفر المعلومات وقابليتها للوصول والتعديل كلما طلبها المستخدم المصرّح له (التوافرية).",
+          ar: "التوافرية: توفر المعلومات وإمكانية الوصول إليها وتعديلها متى ما احتاجها المستخدم المصرح له.",
           slide: 7,
-          details: "• المعلومات جاهزة وقت الحاجة\n• النظام يعمل بكفاءة بلا توقف\n• يمنع الحجب عن المستخدمين الشرعيين",
-          mnemonic: "زي صرافة البنك، متى ما احتجت فلوس تلاقيها شغالة."
+          details: "• عكسها: توقف الخادم أو انقطاع الخدمة (Server not found)",
+          mnemonic: "زي صرافة البنك اللي تشتغل ٢٤ ساعة وتسحب منها فلوسك متى ما بغيت بدون توقف"
         },
         {
-          cat: "Computer Security Goals",
-          term: "✍️ Non-repudiation",
+          cat: "Chapter 1 – Basic Concepts",
+          term: "🤝 Non-repudiation",
           rawTerm: "Non-repudiation",
           en: "Messages or actions are accompanied by proof which cannot be denied.",
-          ar: "وجود دليل يرافق الرسالة أو الإجراء بحيث لا يمكن للطرف الآخر إنكار قيامه به (عدم الإنكار).",
+          ar: "عدم الإنكار: إرفاق الرسائل أو الأفعال بإثبات يمنع أي طرف من إنكار دوره في المعاملة.",
           slide: 8,
-          details: "• يثبت تورط الشخص أو الجهاز بالعملية\n• يمنع التهرب من المسؤولية\n• يعتمد على الأدلة القاطعة",
-          mnemonic: "توقيعك على الشيك، مستحيل تقول مو أنا اللي وقعت."
+          details: "• تضاف عند التحدث عن 'ضمان المعلومات' (Information Assurance)\n• لا يمكن للمرسل ولا المستقبل إنكار العملية",
+          mnemonic: "تخيل تبصم وتوقع على عقد بيع سيارتك، مستحيل تنكر بعدين إنك بعتها"
         },
         {
-          cat: "Computer Security Goals",
+          cat: "Chapter 1 – Basic Concepts",
           term: "🕵️ User Privacy",
           rawTerm: "User Privacy",
-          en: "Users have control over info collected data and made available to others.",
-          ar: "حق المستخدم في التحكم ببياناته المجموعة ولمن يُسمح برؤيتها (خصوصية المستخدم).",
-          slide: 10,
-          details: "• التحكم في البيانات الشخصية\n• منع تتبع البرامج للنشاطات\n• منع استقبال رسائل الـ Spam",
-          mnemonic: "ستارة غرفتك، أنت اللي تقرر متى تفتحها ومين يشوفك."
+          en: "Means that users have control over collected data and made available to others.",
+          ar: "خصوصية المستخدم: قدرة المستخدم على التحكم في البيانات المجمعة عنه وما يتم إتاحته للآخرين.",
+          slide: 9,
+          details: "• المستخدم قد لا يرغب بمعرفة الآخرين بمن يتواصل\n• المستخدم لا يرغب بتلقي رسائل مزعجة (Spam)",
+          mnemonic: "زي لما تقفل حسابك بتويتر وتخليه برايفت عشان تتحكم بالضبط مين يقدر يتابعك"
         },
+
+        // Section 2: Attackers & Motives
         {
-          cat: "Threats and Attacks",
-          term: "🥊 Direct Attack",
-          rawTerm: "Direct Attack",
-          en: "An attack where one computer directly attacks another.",
-          ar: "هجوم مباشر حيث يقوم جهاز كمبيوتر بمهاجمة جهاز كمبيوتر آخر بشكل مباشر.",
-          slide: 14,
-          details: "• هجوم يتم وجهاً لوجه\n• يتم من جهاز المهاجم مباشرة\n• أسهل تتبعاً من الهجوم غير المباشر",
-          mnemonic: "واحد يعطيك بوكس بوجهك مباشرة."
-        },
-        {
-          cat: "Threats and Attacks",
-          term: "🎭 Indirect Attack",
-          rawTerm: "Indirect Attack",
-          en: "One computer causes another computer to launch an attack.",
-          ar: "هجوم غير مباشر يقوم فيه جهاز بتوريط جهاز آخر لشن الهجوم نيابة عنه.",
-          slide: 14,
-          details: "• يستخدم جهازا وسيطا\n• يصعّب تتبع المهاجم الأصلي\n• قد يستخدم أجهزة بريئة لتنفيذ الهجوم",
-          mnemonic: "واحد يحرّش عليك شخص ثاني عشان يضربك."
-        },
-        {
-          cat: "Threats and Attacks",
+          cat: "Chapter 2 – Attackers & Motives",
           term: "👶 Script kiddies",
           rawTerm: "Script kiddies",
-          en: "Amateurs who download malicious software from hacker web sites.",
-          ar: "مهاجمون مبتدئون يقومون بتحميل برامج خبيثة جاهزة من مواقع القراصنة بدلاً من برمجتها بأنفسهم.",
-          slide: 24,
-          details: "• مستوى مهاراتهم منخفض\n• يعتمدون على أدوات جاهزة\n• لا يبتكرون هجمات جديدة غالباً",
-          mnemonic: "طالب يغش الحل من ويكيبيديا ويسوي نفسه عالم."
+          en: "Attackers who download malicious software from hacker web sites.",
+          ar: "المبتدئون: مهاجمون يستخدمون برامج خبيثة جاهزة يحملونها من مواقع الهاكرز.",
+          slide: 22,
+          details: "• مستوى مهاراتهم التقنية منخفض جداً",
+          mnemonic: "بزران الهاكرز، يحملون برامج جاهزة من النت ويسوون زحمة وهم ما يدرون وش الطبخة!"
         },
         {
-          cat: "Threats and Attacks",
-          term: "🏠 Insiders",
+          cat: "Chapter 2 – Attackers & Motives",
+          term: "🏢 Insiders",
           rawTerm: "Insiders",
           en: "Legitimate system users who access data that they have no rights to access.",
-          ar: "مستخدمون شرعيون من داخل النظام يستغلون وصولهم للإطلاع على بيانات لا يملكون صلاحية لها (التهديد الداخلي).",
-          slide: 24,
-          details: "• قد يكون اكتشافهم بالصدفة\n• يعتبرون خطراً كبيراً لسهولة وصولهم\n• يمتلكون صلاحيات مبدئية في النظام",
-          mnemonic: "الخطر يجيك من زميلك اللي معاه مفتاح المكتب."
+          ar: "المهاجمون الداخليون: مستخدمون نظاميون لديهم صلاحيات، لكنهم يصلون لبيانات لا يحق لهم رؤيتها.",
+          slide: 22,
+          details: "• قد يكتشفون الثغرات بالصدفة (Amateurs)\n• يعتبرون خطر كبير لأنهم يملكون صلاحيات مسبقة",
+          mnemonic: "الموظف اللي معاك بالدوام ويستغل يوزره عشان يتجسس على رواتب الموظفين الباقين"
         },
         {
-          cat: "Threats and Attacks",
-          term: "🗑️ Browsing",
-          rawTerm: "Browsing",
-          en: "Searching through main and secondary memory for residue information.",
-          ar: "تصفح الذاكرة الرئيسية والثانوية للبحث عن أي معلومات متبقية أو مخلفات بيانات.",
-          slide: 28,
-          details: "• يبحث عن مخلفات البيانات\n• يقوم به أحياناً مستخدمون شرعيون\n• يعتبر تهديداً لسرية المعلومات",
-          mnemonic: "واحد ينبش بزبالة مكتبك يدور أوراق مهمة رميتها."
+          cat: "Chapter 2 – Attackers & Motives",
+          term: "🎯 MOM",
+          rawTerm: "MOM",
+          en: "Means, Opportunity, and Motive: The three things attackers must have to exploit a vulnerability.",
+          ar: "الأداة، الفرصة، والدافع: المتطلبات الثلاثة لأي مهاجم لاستغلال نقطة ضعف.",
+          slide: 23,
+          details: "• Means: الأداة (أحياناً مجرد اتصال بالنت)\n• Opportunity: الفرصة (وجود الثغرة)\n• Motive: الدافع (مالي، تحدي، انتقام)",
+          mnemonic: "ثلاثي الخطر: عنده طريقة، ولقى فرصة، وعنده دافع، زي الحرامي اللي لقى باب مفتوح ومحتاج فلوس"
         },
         {
-          cat: "Threats and Attacks",
-          term: "💧 Leakage",
+          cat: "Chapter 2 – Attackers & Motives",
+          term: "🤡 Amateurs",
+          rawTerm: "Amateurs",
+          en: "Ordinary users (insiders) exploiting a weakness, sometimes making accidental discoveries.",
+          ar: "الهواة: مستخدمون عاديون يستغلون نقطة ضعف، وأحياناً يكتشفونها بالصدفة بدون تخطيط مسبق.",
+          slide: 25,
+          details: "• يختلفون عن المحترفين\n• يكتشفون الثغرات غالباً عن طريق الخطأ",
+          mnemonic: "الهاوي اللي بالصدفة لقى ثغرة بالنظام وهو يلعب، ما كان قاصد يخترق ولا خطط لها"
+        },
+        {
+          cat: "Chapter 2 – Attackers & Motives",
+          term: "🦹‍♂️ Crackers",
+          rawTerm: "Crackers",
+          en: "People looking specifically to attack, where the motive is often challenge, not malice.",
+          ar: "المخترقون: أشخاص يبحثون عن الأنظمة لاختراقها، ويكون دافعهم غالباً التحدي وإثبات الذات وليس الخبث.",
+          slide: 25,
+          details: "• مستوى مهاراتهم يتراوح من منخفض (script kiddie) إلى عالي\n• يبحثون عن الهجوم بشكل محدد",
+          mnemonic: "المهووس اللي يدور التحدي ويخترق الأنظمة القوية عشان يستعرض عضلاته التقنية قدام أخوياه"
+        },
+        {
+          cat: "Chapter 2 – Attackers & Motives",
+          term: "🕴️ Career criminals",
+          rawTerm: "Career criminals",
+          en: "Organized crime or cyber-terrorists beginning to get involved in attacks.",
+          ar: "المجرمون المحترفون: عصابات الجريمة المنظمة أو الإرهابيون الذين يشاركون في الهجمات السيبرانية.",
+          slide: 25,
+          details: "• الإرهاب السيبراني (Cyber-terrorism)\n• الجريمة المنظمة",
+          mnemonic: "عصابات المافيا بس بالنسخة الرقمية، شغلهم كله منظم وهدفهم ابتزاز وتدمير مالي"
+        },
+
+        // Section 3: Security Threats & Malware
+        {
+          cat: "Chapter 3 – Threats & Malware",
+          term: "🚰 Leakage",
           rawTerm: "Leakage",
           en: "Transmission of data to an unauthorized user from a process that is allowed to access the data.",
-          ar: "تسريب البيانات وتمريرها من عملية مصرح لها إلى مستخدم غير مصرح له (التسريب).",
-          slide: 28,
-          details: "• ينقل بيانات لمكان غير مصرح\n• يخترق حاجز السرية\n• قد يكون غير مقصود أو ببرمجيات خبيثة",
-          mnemonic: "ماسورة مكسورة تسرّب مويه لجارك اللي ما يدفع الفاتورة."
+          ar: "التسريب: نقل البيانات لمستخدم غير مصرح له عن طريق عملية (process) مسموح لها بالوصول للبيانات.",
+          slide: 26,
+          details: "• انتهاك للسرية (Confidentiality)",
+          mnemonic: "زي الماسورة المكسورة اللي تسرب الموية للحوش بدون ما تدري عنها"
         },
         {
-          cat: "Threats and Attacks",
-          term: "🛑 Denial of services",
-          rawTerm: "Denial of services",
-          en: "Prevention of authorized access to computer resources or delaying operations.",
-          ar: "منع المستخدمين المصرّح لهم من الوصول لموارد النظام أو تأخير العمليات الحساسة (حجب الخدمة).",
-          slide: 29,
-          details: "• يعطل الموارد عن العمل\n• يؤخر العمليات الحساسة\n• يستهدف التوافرية (Availability)",
-          mnemonic: "زحمة سيارات قفلت الشارع، سيارة الإسعاف ما قدرت تمر."
+          cat: "Chapter 3 – Threats & Malware",
+          term: "🧩 Inference",
+          rawTerm: "Inference",
+          en: "Deducing confidential data about an individual by correlating unrelated statistics about groups.",
+          ar: "الاستنتاج: استنباط بيانات سرية عن شخص من خلال ربط إحصائيات عامة غير مرتبطة ببعضها.",
+          slide: 26,
+          details: "• يجمع معلومات عامة ليصل لمعلومة خاصة ومخفية",
+          mnemonic: "شغل المحقق كونان! يربط معلومات عادية مالها دخل ببعض عشان يطلع بالسر المخفي"
         },
         {
-          cat: "Threats and Attacks",
-          term: "🎣 Spoofing",
+          cat: "Chapter 3 – Threats & Malware",
+          term: "🎭 Spoofing",
           rawTerm: "Spoofing",
-          en: "Duping a user into believing that he is talking to the system to reveal information.",
-          ar: "انتحال الشخصية لخداع المستخدم وجعله يظن أنه يتواصل مع النظام الحقيقي ليكشف عن معلوماته.",
-          slide: 31,
-          details: "• خداع وتلاعب بالمستخدم\n• يستهدف سرقة كلمات المرور\n• يخلق واجهات مزيفة",
-          mnemonic: "موقع نصاب مسوي نفسه البنك حقك عشان تبلع الطعم وتعطيه الباسورد."
+          en: "Duping a user into believing that he is talking to the system and revealing information.",
+          ar: "الانتحال/الخداع: خداع المستخدم لجعله يعتقد أنه يتحدث مع النظام الفعلي ليقوم بكشف معلوماته (مثل كلمة المرور).",
+          slide: 29,
+          details: "• يستدرج المستخدم لكشف أسراره",
+          mnemonic: "النصاب اللي يقلد صوت مديرك بالتليفون عشان يخليك تحول له فلوس وتصدقه"
         },
         {
-          cat: "Threats and Attacks",
+          cat: "Chapter 3 – Threats & Malware",
           term: "🐴 Trojan Horse",
           rawTerm: "Trojan Horse",
           en: "A program that does more than it is supposed to do.",
-          ar: "برنامج يبدو مفيداً لكنه يقوم بعمليات خفية ضارة لم يكن يفترض القيام بها (حصان طروادة).",
-          slide: 32,
-          details: "• يبدو كبرنامج شرعي\n• يقوم بعمليات خبيثة بالخفاء\n• يهدد السرية والنزاهة",
-          mnemonic: "هدية مغلفة بشكل حلو بس جواتها عقرب."
+          ar: "حصان طروادة: برنامج يبدو طبيعياً ولكنه يقوم بأشياء خفية أكثر مما يفترض به فعله.",
+          slide: 30,
+          details: "• تهديد معقد\n• مثال: محرر نصوص يجعل كل ملفاتك قابلة للقراءة للجميع أثناء قيامه بعمله الطبيعي",
+          mnemonic: "هدية مغلفة بشكل حلو بس جواتها قنبلة، زي حصان طروادة التاريخي اللي دخلوه كهدية وفيه جيش"
         },
         {
-          cat: "Threats and Attacks",
+          cat: "Chapter 3 – Threats & Malware",
+          term: "🚪 Trap Door",
+          rawTerm: "Trap Door",
+          en: "A system modification installed by a penetrator that opens the system on command.",
+          ar: "الباب الخلفي: تعديل في النظام يثبته المخترق (أو المطور) ليفتح له النظام بأمر معين وقت ما يشاء.",
+          slide: 31,
+          details: "• قد يتم إدخاله بواسطة مطور النظام نفسه\n• إشعار تغيير هندسي مزيف للنظام",
+          mnemonic: "الباب السري اللي يبنيه المهندس في البيت اللي صممه عشان يدخل ويطلع بدون ما أحد يشوفه"
+        },
+        {
+          cat: "Chapter 3 – Threats & Malware",
           term: "🦠 Virus",
           rawTerm: "Virus",
-          en: "A program that can infect other programs by modifying them to include a copy of itself.",
-          ar: "برنامج ينسخ نفسه ويصيب البرامج الأخرى بتعديلها لتضمين نسخة خبيثة منه (الفيروس).",
-          slide: 33,
-          details: "• ينسخ نفسه داخل البرامج\n• يسبب أضراراً للملفات والنظام\n• ينتشر بين الملفات كالعدوى",
-          mnemonic: "واحد مزكم يعطس بوجه الباقين ويعديهم كلهم."
+          en: "A program that can infect other programs by modifying them to include a possibly evolved copy of itself.",
+          ar: "الفيروس: برنامج يعدي البرامج الأخرى عن طريق تعديلها لتشمل نسخة (ربما متطورة) من نفسه.",
+          slide: 31,
+          details: "• يحتاج لتدخل أو برنامج مضيف ليعمل وينسخ نفسه",
+          mnemonic: "زي الزكام المزعج! يعدي كل اللي حولك وينسخ نفسه في برامج ثانية عشان يدمرها"
         },
+
+        // Section 4: Core Mechanisms & Vulnerabilities
         {
-          cat: "Security Controls & Policies",
-          term: "🧊 CNSS Security Model",
-          rawTerm: "CNSS Security Model",
-          en: "A 3x3x3 cube model covering Technology, Education, Policy across Confidentiality, Integrity, Availability.",
-          ar: "نموذج مكعب لأمن المعلومات يتكون من 27 خلية ويشمل (التقنية، التعليم، السياسة) مع أهداف الأمن الرئيسية.",
-          slide: 12,
-          details: "• يحتوي على 27 خلية\n• يغطي التقنية، الأفراد، والسياسات\n• يعالج التخزين والمعالجة والنقل",
-          mnemonic: "مكعب روبيك للأمن، كل لفة تحمي جهة وتغطي كل الجوانب."
-        },
-        {
-          cat: "Security Controls & Policies",
-          term: "🕳️ Vulnerability",
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
+          term: "💔 Vulnerability",
           rawTerm: "Vulnerability",
-          en: "A flaw in a system that allows a policy to be violated.",
-          ar: "نقطة ضعف أو خلل في النظام يسمح بخرق سياسة الأمن (الثغرة).",
-          slide: 34,
-          details: "• خلل في النظام\n• يسمح بانتهاك السياسات\n• يوفر فرصة للمهاجم (Opportunity)",
-          mnemonic: "شباك مكسور ببيتك أي حرامي يقدر ينط منه."
+          en: "A flaw or weak point in a system that allows a policy to be violated.",
+          ar: "نقطة الضعف/الثغرة: عيب في النظام يسمح بانتهاك السياسة الأمنية.",
+          slide: 32,
+          details: "• نقطة ضعف (Weak Point)",
+          mnemonic: "زي القفل المصدي في باب بيتكم، أي مفتاح أو ضربة قوية تقدر تفتحه"
         },
         {
-          cat: "Security Controls & Policies",
-          term: "🔑 Exploit",
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
+          term: "🛠️ Exploit",
           rawTerm: "Exploit",
-          en: "The act of exercising a weak point or a script that automates an attack.",
-          ar: "استغلال نقطة الضعف، ويُطلق أيضاً على البرنامج أو السكريبت الذي ينفذ الهجوم تلقائياً (الاستغلال).",
-          slide: 34,
-          details: "• تنفيذ الهجوم على الثغرة\n• قد يكون سكريبت جاهز\n• يحول الضعف إلى ضرر فعلي",
-          mnemonic: "العتلة اللي يستخدمها الحرامي عشان يكسر الشباك."
+          en: "The act of exercising a weak point, or a program/script that automates an attack.",
+          ar: "الاستغلال: فعل استغلال نقطة الضعف، أو برنامج/سكربت يقوم بأتمتة الهجوم.",
+          slide: 32,
+          details: "• هو التنفيذ الفعلي للهجوم مستغلاً الثغرة",
+          mnemonic: "الحرامي اللي فعلياً يستغل القفل المصدي (الثغرة) ويدخل يسرق البيت"
         },
         {
-          cat: "Security Controls & Policies",
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
+          term: "🔦 Exposure",
+          rawTerm: "Exposure",
+          en: "An information leak that may assist an attacker.",
+          ar: "الانكشاف: تسريب معلومات (حتى لو كانت بسيطة) قد تساعد المهاجم في هجومه.",
+          slide: 32,
+          details: "• يسهل على المهاجم جمع المعلومات للبدء بالهجوم",
+          mnemonic: "زي لما تنسى رقمك السري مكتوب على ورقة صفراء وملصقة بشاشتك بالدوام"
+        },
+        {
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
           term: "📜 Security Policy",
           rawTerm: "Security Policy",
           en: "A statement of what is and what is not allowed.",
-          ar: "بيان أو وثيقة تحدد بوضوح ما هو المسموح وما هو غير المسموح داخل النظام (سياسة الأمان).",
-          slide: 35,
-          details: "• قد تكون جمل عادية أو معادلات رياضية\n• تحدد القوانين والصلاحيات\n• هي الأساس لتطبيق الحماية",
-          mnemonic: "لوحة قوانين عند باب المسبح: ممنوع الركض، ممنوع الأكل."
+          ar: "السياسة الأمنية: بيان يوضح بدقة ما هو مسموح وما هو غير مسموح في النظام.",
+          slide: 33,
+          details: "• قد تكون رسمية (جمل رياضية منطقية)\n• أو غير رسمية (عبارات إنجليزية عامة)",
+          mnemonic: "دستور الشركة.. يقولك المسموح والممنوع بوضوح وبدون لف ودوران"
         },
         {
-          cat: "Security Controls & Policies",
-          term: "🚦 Access Control",
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
+          term: "🚧 Access Control",
           rawTerm: "Access Control",
           en: "A means of limiting a user's access to only those entities that the policy determines should be accessed.",
-          ar: "وسيلة لتقييد وتحديد صلاحيات المستخدمين لمنعهم من الوصول إلا لما تسمح به سياسة الأمان (التحكم في الوصول).",
-          slide: 36,
-          details: "• يحدد من يدخل وماذا يفعل\n• يطبق سياسة الأمان فعلياً\n• يتحكم بالـ Subjects والـ Objects",
-          mnemonic: "حارس الأمن اللي يشيّك على تصريحك قبل تدخل العمارة."
+          ar: "التحكم بالوصول: وسيلة لتقييد وصول المستخدم للموارد التي تحدد السياسة أنه يحق له الوصول إليها فقط.",
+          slide: 34,
+          details: "• Subjects: الكيانات النشطة (مستخدمين، برامج)\n• Objects: الموارد (ملفات، أجهزة)\n• Access Modes: قراءة، كتابة، تنفيذ",
+          mnemonic: "زي بطاقة الدخول للفندق، ما تفتح لك إلا باب غرفتك والمصعد بس، وتمنعك من غرف الناس الثانية"
         },
         {
-          cat: "Security Controls & Policies",
-          term: "🏃 Subjects",
-          rawTerm: "Subjects",
-          en: "Active entities in the system (e.g., users, processes, programs).",
-          ar: "الكيانات النشطة والفاعلة في النظام مثل المستخدمين أو البرامج التي تنفذ الأوامر.",
-          slide: 36,
-          details: "• الكيانات النشطة بالنظام\n• تشمل المستخدمين والبرامج\n• هي من يطلب الوصول للموارد",
-          mnemonic: "الموظف اللي يطلب يشوف الملف."
-        },
-        {
-          cat: "Security Controls & Policies",
-          term: "📄 Objects",
-          rawTerm: "Objects",
-          en: "Resources or passive entities in the system (e.g., files, programs, devices).",
-          ar: "الموارد أو الكيانات الساكنة في النظام مثل الملفات والأجهزة (الكائنات).",
-          slide: 36,
-          details: "• الكيانات الساكنة بالنظام\n• تشمل الملفات والأجهزة\n• هي الموارد التي يُطلب الوصول إليها",
-          mnemonic: "الملف نفسه اللي الموظف جالس يقرأه."
+          cat: "Chapter 4 – Mechanisms & Vulnerabilities",
+          term: "🔐 Encryption",
+          rawTerm: "Encryption",
+          en: "The process of converting Plaintext into Ciphertext before sending it over a network.",
+          ar: "التشفير: عملية تحويل النص الواضح (Plaintext) إلى نص مشفر (Ciphertext) قبل إرساله عبر الشبكة.",
+          slide: 35,
+          details: "• يحمي البيانات المرسلة عبر الشبكة (Network)\n• فك التشفير (Decryption) يحوله مرة أخرى لنص واضح للمستقبل",
+          mnemonic: "تكتب رسالة سرية بينك وبين خويك بلغة الطيور.. ما يفهمها غيركم والكل يحسبها خرابيط"
         }
       ];
 
