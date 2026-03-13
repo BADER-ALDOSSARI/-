@@ -746,6 +746,12 @@
         );
         pointer-events: none;
       }
+      .ch-badge {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 3px 12px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+      }
       .grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
@@ -2200,6 +2206,74 @@
         display: block;
         animation: slideUp 0.3s ease;
       }
+      .slide-orig-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        font-family: var(--font);
+        font-weight: 700;
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      .slide-orig-btn:hover {
+        border-color: rgba(0, 212, 180, 0.35);
+        color: var(--accent);
+        background: rgba(0, 212, 180, 0.05);
+      }
+      .slide-orig-btn .s-chevron {
+        font-size: 0.65rem;
+        transition: transform 0.25s;
+      }
+      .slide-orig-btn.open .s-chevron {
+        transform: rotate(180deg);
+      }
+      body.light .slide-orig-btn {
+        background: rgba(180, 120, 60, 0.04);
+        border-color: rgba(180, 120, 60, 0.14);
+        color: var(--text-dim);
+      }
+      body.light .slide-orig-btn:hover {
+        border-color: rgba(13, 148, 136, 0.35);
+        color: var(--accent);
+        background: rgba(13, 148, 136, 0.05);
+      }
+      .slide-orig-reveal {
+        display: none;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        line-height: 1.75;
+        text-align: right;
+        animation: slideUp 0.2s ease;
+      }
+      .slide-orig-reveal.show {
+        display: block;
+      }
+      .slide-orig-lbl {
+        font-size: 0.65rem;
+        font-weight: 900;
+        color: var(--text-dim);
+        opacity: 0.5;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 5px;
+      }
+      body.light .slide-orig-reveal {
+        background: rgba(180, 120, 60, 0.04);
+        border-color: rgba(180, 120, 60, 0.1);
+      }
     </style>
   </head>
   <body>
@@ -2290,7 +2364,7 @@
     </div>
     <header>
       <h1>📱 Big Data Analytics – Introduction</h1>
-      <p>IT1322 - Introduction to Big Data and Data Analytics</p>
+      <p>IT1322 - Course Fundamentals</p>
       <div class="neuro-tip">🧠 تذكّر الإجابة في ذهنك أولاً ثم اسحب</div>
       <div class="progress"><div id="bar"></div></div>
     </header>
@@ -2672,216 +2746,274 @@
       }
 
       /* ══════════════════════════════════════════
-   📚 البيانات
+   📚 البيانات — AI: استبدل هذا الجزء فقط
 ══════════════════════════════════════════ */
       const items = [
         {
-          cat: "Chapter 1 – Big Data & Definitions",
-          term: "🐘 Big Data",
+          cat: "Big Data Concepts & Characteristics",
+          term: "🗄️ Big Data",
           rawTerm: "Big Data",
-          en: "Datasets beyond typical database tools to capture, store, manage, and analyze.",
-          ar: "📖 نص السلايد: Datasets whose size is beyond the ability of typical database software tools.\n💬 بكلام أبسط: بيانات ضخمة ومعقدة ما تقدر البرامج العادية تتعامل معها.",
+          en: "Datasets whose size is beyond the ability of typical database software tools to capture, store, manage, and analyze",
+          ar: "بيانات ضخمة تفوق قدرة قواعد البيانات العادية على تخزينها وتحليلها",
+          slideText:
+            '"Big data": Datasets whose size is beyond the ability of typical database software tools to capture, store, manage, and analyze',
           slide: 9,
           details:
-            "• قد تكون كبيرة الحجم (Data that will not fit in main memory) [cite: 51]\n• تحتوي على عدد كبير من الملاحظات أو الخصائص\n• يتراوح حجمها من تيرابايت إلى بيتابايت",
-          mnemonic: "زي مقاطع الواتس اللي تعبي جوالك وما تقدر تخزنها",
+            "• يختلف تعريفها حسب القطاع والأدوات\n• تصل أحجامها من عدة تيرابايتات إلى بيتابايتات",
+          mnemonic: "عفش مستودع حراج بن قاسم، كثير وماتقدر ترتبه بدولاب غرفتك",
         },
         {
-          cat: "Chapter 1 – Big Data & Definitions",
-          term: "📋 Data",
+          cat: "Big Data Concepts & Characteristics",
+          term: "🔢 Data",
           rawTerm: "Data",
-          en: "Set of values of qualitative or quantitative variables.",
-          ar: "📖 نص السلايد: Set of values of qualitative or quantitative variables.\n💬 بكلام أبسط: مجرد أرقام وقيم خام بدون معنى واضح.",
+          en: "Set of values of qualitative or quantitative variables",
+          ar: "مجموعة قيم لمتغيرات نوعية أو كمية (البيانات الخام)",
+          slideText:
+            "Data: Set of values of qualitative or quantitative variables",
           slide: 10,
-          details: "• مادة خام للمعلومات [cite: 55]",
-          mnemonic: "زي الحروف المبعثرة قبل ترتبها بكلمة",
+          details:
+            "• البيانات الخام قبل المعالجة\n• تتكون من خصائص تصف كائنات معينة",
+          mnemonic: "المقاضي وهي بأكياسها قبل ترتبها بالثلاجة",
         },
         {
-          cat: "Chapter 1 – Big Data & Definitions",
+          cat: "Big Data Concepts & Characteristics",
           term: "💡 Information",
           rawTerm: "Information",
-          en: "Meaningful or organized data.",
-          ar: "📖 نص السلايد: Meaningful or organized data.\n💬 بكلام أبسط: بيانات ترتبت وصار لها معنى ومفيدة.",
+          en: "Meaningful or organized data",
+          ar: "البيانات بعد ترتيبها عشان تصير لها معنى مفيد",
+          slideText: "Information: Meaningful or organized data",
           slide: 10,
-          details: "• البيانات بعد تنظيمها وتحليلها [cite: 56]",
-          mnemonic: "الحروف المبعثرة صارت كلمة مفهومة",
+          details: "• البيانات إذا ترتبت صار لها قيمة",
+          mnemonic: "الطبخة الجاهزة بعد ما استخدمت المقاضي",
         },
         {
-          cat: "Chapter 1 – Big Data & Definitions",
-          term: "📊 Data Analytics",
+          cat: "Big Data Concepts & Characteristics",
+          term: "🔎 Data Analytics",
           rawTerm: "Data Analytics",
-          en: "The process of examining data to draw and communicate useful conclusions.",
-          ar: "📖 نص السلايد: The process of examining data in order to draw and communicate useful conclusions.\n💬 بكلام أبسط: تحليل البيانات عشان نطلع منها بنتيجة وقرار.",
+          en: "The process of examining data in order to draw and communicate useful conclusions",
+          ar: "فحص البيانات عشان تطلع منها بقرارات واستنتاجات مفيدة",
+          slideText:
+            "Data Analytics: The process of examining data in order to draw and communicate useful conclusions about the information it contains",
           slide: 10,
           details:
-            "• يساعد في تقليل التكاليف واتخاذ قرارات أفضل [cite: 57]\n• مهم في التسويق وتحسين الإنتاجية",
-          mnemonic: "زي المحقق كونان يجمع الأدلة عشان يوصل للنتيجة",
+            "• تساعد في خفض التكاليف وتسريع القرارات\n• تطلع لنا منتجات وخدمات جديدة",
+          mnemonic: "شغلة المحقق كونان، يجمع الأدلة عشان يطلع بالزبدة",
         },
-
         {
-          cat: "Chapter 2 – The 4 V's",
-          term: "🌊 Volume",
+          cat: "Big Data Concepts & Characteristics",
+          term: "📈 Volume",
           rawTerm: "Volume",
-          en: "The size, scale, and dimensionality of the data.",
-          ar: "📖 نص السلايد: Volume: size, scale, dimensionality.\n💬 بكلام أبسط: الحجم الهائل للبيانات اللي يخليها صعبة التخزين.",
+          en: "Refers to the large quantity, size, scale, and dimensionality of data",
+          ar: "حجم البيانات الضخم جداً واللي يزيد بشكل مستمر",
+          slideText: "Volume: size, scale, dimensionality",
           slide: 21,
           details:
-            "• يمثل تحدياً في التخزين والاسترجاع [cite: 171]\n• كمية كبيرة من البيانات",
-          mnemonic: "زحمة الدايري الصبح — كمية سيارات مهولة",
+            "• مئات الملايين من الإيميلات في الدقيقة\n• التحدي فيها بالتخزين والمعالجة السريعة",
+          mnemonic: "زحمة طريق الملك فهد وقت الدوامات",
         },
         {
-          cat: "Chapter 2 – The 4 V's",
-          term: "🚀 Velocity",
+          cat: "Big Data Concepts & Characteristics",
+          term: "⚡ Velocity",
           rawTerm: "Velocity",
-          en: "The high speed at which data is generated and moving.",
-          ar: "📖 نص السلايد: Velocity: Speed of data is very high.\n💬 بكلام أبسط: سرعة وصول وتوليد البيانات باستمرار.",
+          en: "The very high speed at which data is generated and must be processed",
+          ar: "السرعة العالية جداً في توليد البيانات",
+          slideText: "Velocity: Speed of data is very high",
           slide: 22,
           details:
-            "• يتطلب معالجة في الوقت الفعلي (Real time) [cite: 194]\n• التأخير في المعالجة يعني ضياع فرص",
-          mnemonic: "تويتر وقت المباراة — تغريدات تطير بسرعة البرق",
+            "• تأخير القرار يعني تضيع فرص\n• المعالجة اللحظية تتفوق على الباتش",
+          mnemonic: "سرعة نزول الرواتب وتطيرها من الحساب في يومين",
         },
         {
-          cat: "Chapter 2 – The 4 V's",
-          term: "🥗 Variety",
+          cat: "Big Data Concepts & Characteristics",
+          term: "🧩 Variety",
           rawTerm: "Variety",
-          en: "Structural variety and different formats/models of data.",
-          ar: "📖 نص السلايد: Variety: Structural variety, different formats, models.\n💬 بكلام أبسط: تنوع أشكال البيانات (نص، صورة، فيديو، إلخ).",
+          en: "The structural variety, different formats, and models of data",
+          ar: "تنوع أشكال البيانات، سواء صوت، فيديو، نصوص أو جداول",
+          slideText: "Variety: Structural variety, different formats, models",
           slide: 23,
           details:
-            "• قد تكون منظمة (Structured) أو غير منظمة (Unstructured) [cite: 234]\n• تمثل تحدياً في كيفية الفهم والتفسير (Semantic)",
-          mnemonic: "بوفيه مفتوح — تلقى فيه كل الأشكال والأنواع",
+            "• بيانات غير مهيكلة زي الفيديو، أو مهيكلة زي الجداول\n• التحدي في كيفية تفسيرها وربطها",
+          mnemonic: "بوفيه مفتوح في زواج، فيه حلا ومالح وعصيرات وكل شي",
         },
         {
-          cat: "Chapter 2 – The 4 V's",
-          term: "🕵️ Veracity",
+          cat: "Big Data Concepts & Characteristics",
+          term: "✔️ Veracity",
           rawTerm: "Veracity",
-          en: "The quality, trustworthiness, and reliability of the data.",
-          ar: "📖 نص السلايد: Veracity: Quality of data.\n💬 بكلام أبسط: مدى دقة وموثوقية البيانات وخلوها من الأخطاء.",
+          en: "The quality, trustworthiness, and reliability of data",
+          ar: "جودة البيانات وموثوقيتها وخلوها من الأخطاء",
+          slideText: "Veracity: Quality of data",
           slide: 24,
           details:
-            "• تتأثر بالتحيز والتكرار والأخطاء البشرية [cite: 247]\n• الأخبار المزيفة والإعجابات الوهمية تعتبر مشكلة",
-          mnemonic: "سوالف المجالس — لازم تتأكد من صدق السالفة قبل تنشرها",
+            "• مشاكل البيانات: تحيزات، نقص، وتكرار\n• تشمل الأخبار الكاذبة والحسابات الوهمية",
+          mnemonic: "سوالف الواتساب المضروبة اللي تحتاج تتأكد منها قبل تنشرها",
         },
 
         {
-          cat: "Chapter 3 – Sources & Types",
+          cat: "Data Types & Analytics Tasks",
           term: "🤖 Machine Generated Data",
           rawTerm: "Machine Generated Data",
-          en: "Data produced automatically by machines without human intervention.",
-          ar: "📖 نص السلايد: Biggest source of big data (Temperature sensors, GPS, Satellite, IoT).\n💬 بكلام أبسط: البيانات اللي تتولد من الأجهزة والحساسات من نفسها.",
+          en: "The biggest source of big data, originating from sensors, IoT, and satellites",
+          ar: "البيانات اللي تطلع من الآلات والحساسات بشكل آلي",
+          slideText:
+            "Biggest source of big data. Temperature sensors, GPS navigator, Satellite imagery, Apps, Increasing number of smart devices, IoT",
           slide: 17,
           details:
-            "• هي أكبر مصدر للبيانات الضخمة [cite: 121]\n• غالباً تكون بيانات غير منظمة (Unstructured)",
-          mnemonic: "كاميرات ساهر تصور وتقيد من نفسها بدون تدخل",
+            "• هي المصدر الأكبر للبيانات الضخمة\n• رحلة طيران 12 ساعة تنتج 84 تيرابايت",
+          mnemonic: "عداد الكهرب الذكي اللي يرسل قرايته لحاله كل يوم",
         },
         {
-          cat: "Chapter 3 – Sources & Types",
-          term: "📱 Human Generated Data",
+          cat: "Data Types & Analytics Tasks",
+          term: "👥 Human Generated Data",
           rawTerm: "Human Generated Data",
-          en: "Data created explicitly by people through digital platforms.",
-          ar: "📖 نص السلايد: Daily facebook data, Twitter data, emails.\n💬 بكلام أبسط: البيانات اللي يكتبها وينشرها الناس بأنفسهم.",
+          en: "Data generated by people, typically unstructured like tweets and emails",
+          ar: "البيانات اللي يصنعها البشر، وغالباً تكون غير مهيكلة زي السوشيال ميديا",
+          slideText:
+            "Typically unstructured, or at best semi-structured... Generally more text: 500 million tweets per day",
           slide: 18,
           details:
-            "• غالباً تكون نصوص (Text) أو شبه منظمة [cite: 137]\n• تستخدم لتحليل المشاعر (Sentiment analysis)",
-          mnemonic: "قروب العايلة وتغريداتك وصورك اللي تنزلها",
+            "• بيانات الفيسبوك تتجاوز 30 بيتابايت يومياً\n• مفيدة جداً في تحليل المشاعر",
+          mnemonic: "قروب العايلة اللي كله سوالف وصور مقاطع ما تنحصر",
         },
         {
-          cat: "Chapter 3 – Sources & Types",
-          term: "🏢 Organization Generated Data",
-          rawTerm: "Organization Generated Data",
-          en: "Data produced by organizations during their operations.",
-          ar: "📖 نص السلايد: University Students Data, Sports Data, Banks, e-Commerce.\n💬 بكلام أبسط: السجلات والبيانات الرسمية من الشركات والجهات.",
-          slide: 19,
-          details:
-            "• مفيدة لتوقع الطلب (Predict demands) واكتشاف الاحتيال [cite: 145]",
-          mnemonic: "فواتير الكهرباء وكشوفات حساب البنك",
-        },
-        {
-          cat: "Chapter 3 – Sources & Types",
-          term: "🏷️ Categorical Attribute",
+          cat: "Data Types & Analytics Tasks",
+          term: "🔠 Categorical Attribute",
           rawTerm: "Categorical Attribute",
-          en: "Variables that represent types or categories, either nominal or ordinal.",
-          ar: "📖 نص السلايد: Categorical Examples: eye color, zip codes, words, rankings.\n💬 بكلام أبسط: البيانات التصنيفية اللي تعبر عن أنواع مو أرقام قياسية.",
+          en: "Attributes that represent categories, split into Nominal and Ordinal types",
+          ar: "خصائص فئوية تصنف الأشياء لمجموعات بدون قيمة رقمية",
+          slideText:
+            "Categorical. Examples: eye color, zip codes, words... Nominal (no order or comparison) vs Ordinal (order but not comparable)",
           slide: 28,
           details:
-            "• Nominal: بدون ترتيب معين (مثل لون العين) [cite: 288]\n• Ordinal: بترتيب بس ما تقارن كمياً (مثل: طويل، متوسط)",
-          mnemonic: "مقاسات الثوب — تفصيل أو جاهز أو الوان",
+            "• الـ Nominal ماله ترتيب زي الألوان\n• الـ Ordinal له ترتيب بس ما يقارن زي (جيد، ممتاز)",
+          mnemonic: "تصنيف سيارات ربعك، كابرس وهايلكس وسوناتا",
         },
         {
-          cat: "Chapter 3 – Sources & Types",
+          cat: "Data Types & Analytics Tasks",
           term: "🔢 Numeric Attribute",
           rawTerm: "Numeric Attribute",
-          en: "Variables representing measurable quantities like counts or continuous values.",
-          ar: "📖 نص السلايد: Numeric Examples: dates, temperature, time, length.\n💬 بكلام أبسط: البيانات الرقمية اللي نقدر نحسبها ونقيسها.",
+          en: "Attributes that are numbers, either Discrete (counts) or Continuous (values)",
+          ar: "خصائص رقمية بحتة، مثل الطول والحرارة",
+          slideText:
+            "Numeric. Examples: dates, temperature, time, length... Discrete (counts) vs Continuous (temperature)",
           slide: 28,
           details:
-            "• Discrete: أرقام معدودة (Counts) [cite: 291]\n• Continuous: أرقام مستمرة متصلة (مثل الحرارة)",
-          mnemonic: "كم رصيدك في البنك وكم درجة الحرارة اليوم",
+            "• الـ Discrete أرقام صحيحة زي العدد\n• الـ Continuous أرقام مستمرة تقبل كسور زي الحرارة",
+          mnemonic: "كم باقي في حسابك بالهللة",
         },
-
         {
-          cat: "Chapter 4 – Analytics Tasks",
+          cat: "Data Types & Analytics Tasks",
+          term: "📄 Document Data",
+          rawTerm: "Document Data",
+          en: "Data where each document becomes a term vector",
+          ar: "بيانات نصية يتحول فيها كل مستند إلى متجه مصطلحات",
+          slideText:
+            "Document Data: Each document becomes a 'term' vector, each term is a component (attribute) of the vector",
+          slide: 31,
+          details:
+            "• القيمة هي عدد مرات تكرار الكلمة\n• تستخدم في تصنيف النصوص",
+          mnemonic: "فهرس الكتاب اللي يعلمك كل كلمة بأي صفحة انذكرت",
+        },
+        {
+          cat: "Data Types & Analytics Tasks",
+          term: "🛒 Transaction Data",
+          rawTerm: "Transaction Data",
+          en: "Data where each record or transaction is a set of items",
+          ar: "بيانات العمليات، كل عملية عبارة عن مجموعة من العناصر",
+          slideText:
+            "Transaction Data: Each record (transaction) is a set of items.",
+          slide: 32,
+          details:
+            "• يمكن تمثيلها كمتجه ثنائي (Binary Vector)\n• مثال: سلة المشتريات",
+          mnemonic: "فاتورة العثيم، كل غرض شريته مسجل فيها",
+        },
+        {
+          cat: "Data Types & Analytics Tasks",
+          term: "🕸️ Graph Data",
+          rawTerm: "Graph Data",
+          en: "Data represented as nodes and links, like the Web graph",
+          ar: "بيانات مترابطة على شكل شبكة مثل روابط الإنترنت",
+          slideText: "Graph Data: Examples: Web graph and HTML Links",
+          slide: 35,
+          details:
+            "• مفيدة في تحليل الشبكات الاجتماعية\n• تعتمد على العقد (Nodes) والروابط (Links)",
+          mnemonic: "شجرة العايلة، كل شخص مربوط بأبوه وعياله",
+        },
+        {
+          cat: "Data Types & Analytics Tasks",
           term: "🗂️ Clustering",
           rawTerm: "Clustering",
-          en: "Finding groups of objects where items inside a group are similar, and items in different groups are unrelated.",
-          ar: "📖 نص السلايد: Finding groups of objects such that the objects in a group will be similar to one another.\n💬 بكلام أبسط: تجميع الأشياء المتشابهة مع بعضها وفصلها عن الباقي.",
+          en: "Finding groups of objects such that the objects in a group are similar to one another",
+          ar: "تجميع البيانات المتشابهة في مجموعات (كلسترز) بناءً على خصائصها",
+          slideText:
+            "Clustering: Finding groups of objects such that the objects in a group will be similar (or related) to one another and different from the objects in other groups",
           slide: 38,
           details:
-            "• مسافات الـ Intra-cluster تكون أصغر ما يمكن [cite: 449]\n• مسافات الـ Inter-cluster تكون أكبر ما يمكن\n• مفيد لتصنيف الوثائق المتشابهة",
-          mnemonic: "تفرز ملابسك الشتوية لحال والصيفية لحال",
+            "• تقليل المسافات جوا المجموعة الواحدة\n• زيادة المسافة بين المجموعات المختلفة",
+          mnemonic: "ترتيب المعازيم، الشباب في الاستراحة والشيبان في المجلس",
         },
         {
-          cat: "Chapter 4 – Analytics Tasks",
-          term: "🎯 Classification",
+          cat: "Data Types & Analytics Tasks",
+          term: "✅ Classification",
           rawTerm: "Classification",
-          en: "A predictive task that assigns items to specific, predefined categories.",
-          ar: "📖 نص السلايد: Classifying credit card transactions as fraudulent.\n💬 بكلام أبسط: أخذ بيانات وتصنيفها لفئة معينة معروفة مسبقاً.",
+          en: "Predictive task classifying items into predefined categories",
+          ar: "تصنيف البيانات وتوقع حالتها لمجموعات معروفة مسبقاً",
+          slideText:
+            "Classifying credit card transactions as fraudulent... Classifying land covers",
           slide: 37,
           details:
-            "• أمثلة: اكتشاف الاحتيال المالي، وتصنيف الأراضي [cite: 439]\n• مهم جداً في الأنظمة التنبؤية (Predictive Analytics)",
-          mnemonic: "تطبيق البنك يصنف العملية إذا هي احتيال ولا لا",
+            "• يستخدم للتنبؤ بحالة البيانات\n• مثال: هل المعاملة احتيال أو طبيعية",
+          mnemonic: "لما البنك يرفض يعطيك قرض لأن نظامهم صنفك كعميل مخاطر",
         },
       ];
 
       /* ══════════════════════════════════════════
-   ⚡ الفروقات
+   ⚡ الفروقات — AI: استبدل هذا الجزء فقط
 ══════════════════════════════════════════ */
       const diffs = [
         {
           title: "Data vs Information",
           terms: ["Data", "Information"],
-          enA: "Raw set of values of qualitative/quantitative variables.",
-          arA: "قيم وبيانات خام بدون ترتيب.",
-          enB: "Organized and meaningful data.",
-          arB: "بيانات تم تحليلها لتعطي معنى وقيمة.",
-          tip: "البيانات هي الطحين، والمعلومات هي الكيكة الجاهزة.",
+          enA: "Raw values of variables",
+          arA: "البيانات الخام بدون معالجة",
+          enB: "Meaningful, organized data",
+          arB: "البيانات بعد ما تترتب ويصير لها معنى",
+          tip: "Data هي المقاضي، Information هي الطبخة",
         },
         {
           title: "Volume vs Velocity",
           terms: ["Volume", "Velocity"],
-          enA: "The sheer scale and size of the dataset.",
-          arA: "الحجم الضخم للبيانات.",
-          enB: "The high speed at which data arrives and must be processed.",
-          arB: "سرعة وصول ومعالجة البيانات.",
-          tip: "الفوليوم هو الكرتون الكبير، والفيلوسيتي هو السيارة السريعة اللي توصله.",
+          enA: "Refers to scale and size of datasets",
+          arA: "الحجم الضخم للبيانات",
+          enB: "Refers to the high speed of data generation",
+          arB: "السرعة العالية في تدفق البيانات",
+          tip: "Volume يعني الكثرة، Velocity يعني السرعة",
         },
         {
-          title: "Categorical vs Numeric",
-          terms: ["Categorical Attribute", "Numeric Attribute"],
-          enA: "Attributes that describe categories (e.g., color, rank).",
-          arA: "بيانات تصنيفية أو نصية زي الألوان.",
-          enB: "Attributes that measure quantities (e.g., temperature, counts).",
-          arB: "بيانات كمية ورقمية تنحسب زي الحرارة.",
-          tip: "Categorical للأنواع والأصناف، Numeric للعد والقياس.",
+          title: "Nominal vs Ordinal (Categorical)",
+          terms: ["Nominal Attribute", "Ordinal Attribute"],
+          enA: "Categories with no order (e.g., color)",
+          arA: "تصنيف ماله ترتيب أو أفضلية",
+          enB: "Categories with a defined order (e.g., ranks)",
+          arB: "تصنيف فيه ترتيب (أول، ثاني، جيد جداً)",
+          tip: "Nominal أسماء مجردة، Ordinal رتب من الأفضل للأسوأ",
         },
         {
-          title: "Machine vs Human Generated",
-          terms: ["Machine Generated Data", "Human Generated Data"],
-          enA: "Generated by sensors and IoT devices automatically.",
-          arA: "تنتجها الأجهزة من نفسها مثل الحساسات.",
-          enB: "Generated explicitly by user actions like tweets or emails.",
-          arB: "يكتبها وينشرها الناس بأنفسهم.",
-          tip: "الآلة تصور لك ساهر، وأنت تنزل ستوري — كل واحد له مصدره.",
+          title: "Discrete vs Continuous (Numeric)",
+          terms: ["Discrete Attribute", "Continuous Attribute"],
+          enA: "Countable numbers (e.g., item count)",
+          arA: "أرقام صحيحة تنعد (١، ٢، ٣)",
+          enB: "Measurable values (e.g., temperature)",
+          arB: "قيم تقبل الكسور والقياس المستمر",
+          tip: "Discrete كم حبة، Continuous كم مقاسه أو وزنه بدقة",
+        },
+        {
+          title: "Clustering vs Classification",
+          terms: ["Clustering", "Classification"],
+          enA: "Finding groups based on similarities",
+          arA: "تجميع البيانات المتشابهة مع بعض بدون ما تعرف أسمائها مسبقاً",
+          enB: "Predicting predefined categories",
+          arB: "تصنيف البيانات لمجموعات معروفة من قبل زي احتيال أو طبيعي",
+          tip: "Clustering ترتبهم على حسب الشبه، Classification تصنفهم لشيء معروف وجاهز",
         },
       ];
 
@@ -3202,6 +3334,24 @@
           zone.addEventListener("touchdrop", (e) => handleDrop(e.detail.term));
           card.appendChild(zone);
           card.appendChild(hint);
+          if (it.slideText) {
+            const sb = document.createElement("button");
+            sb.className = "slide-orig-btn";
+            sb.innerHTML = `<span class="s-chevron">▼</span> نص السلايد الأصلي`;
+            const sr = document.createElement("div");
+            sr.className = "slide-orig-reveal";
+            sr.innerHTML = `<span class="slide-orig-lbl">📄 النص الحرفي من السلايد</span>${it.slideText}`;
+            sb.onclick = () => {
+              const open = !sr.classList.contains("show");
+              sr.classList.toggle("show", open);
+              sb.classList.toggle("open", open);
+              sb.childNodes[1].textContent = open
+                ? " إخفاء النص"
+                : " نص السلايد الأصلي";
+            };
+            card.appendChild(sb);
+            card.appendChild(sr);
+          }
           g.appendChild(card);
         });
       }
