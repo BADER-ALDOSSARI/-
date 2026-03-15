@@ -54,7 +54,7 @@
     .reset-btn{background:none;border:1px solid var(--border);color:var(--text-dim);font-family:var(--font);font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:999px;cursor:pointer;transition:all .2s}
     .reset-btn:hover{border-color:#ef4444;color:#ef4444}
 
-    .container{max-width:900px;margin:0 auto;padding:0 20px 60px}
+    .container{max-width:900px;margin:0 auto;padding:0 20px 0}
     .subject{margin-bottom:28px;animation:fadeUp .5s ease both}
     .subject:nth-child(1){animation-delay:.1s}.subject:nth-child(2){animation-delay:.2s}.subject:nth-child(3){animation-delay:.3s}.subject:nth-child(4){animation-delay:.4s}.subject:nth-child(5){animation-delay:.5s}.subject:nth-child(6){animation-delay:.6s}
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -77,6 +77,29 @@
     .ch-link .ch-result{font-size:.68rem;font-weight:700;color:var(--accent);margin-top:1px}
     .ch-link .ch-arrow{color:var(--text-dim);font-size:.9rem;transition:transform .2s;flex-shrink:0}
     .ch-link:hover .ch-arrow{transform:translateX(-4px);color:var(--accent)}
+    .ch-link.ch-quiz{border-color:rgba(99,102,241,.3);background:rgba(99,102,241,.04)}
+    .ch-link.ch-quiz:hover{border-color:#6366f1;box-shadow:0 6px 20px rgba(99,102,241,.18)}
+    .ch-link.ch-mid{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04)}
+    .ch-link.ch-mid:hover{border-color:#f59e0b;box-shadow:0 6px 20px rgba(245,158,11,.18)}
+    .ch-num-exam{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1.5px solid;flex-shrink:0}
+
+    /* ══ PAST EXAMS CARD ══ */
+    .past-exams-section{max-width:900px;margin:0 auto;padding:0 20px 50px}
+    .past-exams-title{font-size:.78rem;font-weight:900;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;padding-right:4px}
+    .past-exams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .pe-card{display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;text-decoration:none;color:var(--text);transition:all .22s;position:relative;overflow:hidden}
+    .pe-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,180,.06),rgba(99,102,241,.04));opacity:0;transition:opacity .22s}
+    .pe-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,212,180,.15)}
+    .pe-card:hover::before{opacity:1}
+    body.light .pe-card{background:var(--bg2);border-color:var(--border)}
+    .pe-emoji{font-size:1.8rem;flex-shrink:0;line-height:1}
+    .pe-info{flex:1;display:flex;flex-direction:column;gap:3px}
+    .pe-name{font-size:.9rem;font-weight:900}
+    .pe-desc{font-size:.72rem;font-weight:600;color:var(--text-dim)}
+    .pe-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:900;background:rgba(0,212,180,.1);border:1px solid rgba(0,212,180,.22);color:var(--accent);margin-top:4px;width:fit-content}
+    .pe-arrow{color:var(--text-dim);font-size:1.1rem;transition:all .22s;flex-shrink:0}
+    .pe-card:hover .pe-arrow{transform:translateX(-4px);color:var(--accent)}
+
     .footer{text-align:center;color:var(--text-dim);font-size:.82rem;padding:30px 20px;line-height:1.9}
     .signature{font-weight:900;color:var(--accent);font-size:.88rem;margin-bottom:2px}
     @media(max-width:500px){
@@ -85,6 +108,7 @@
       .chapters.open{grid-template-columns:repeat(2,1fr)}
       .ch-link{padding:12px 14px}
       .progress-grid{grid-template-columns:1fr}
+      .past-exams-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -141,18 +165,39 @@
        chapters:[{file:"ch1.html",title:"Ch 1"},{file:"ch2.html",title:"Ch 2"},{file:"ch3.html",title:"Ch 3"},{file:"ch4.html",title:"Ch 4"},{file:"ch5.html",title:"Ch 5"},{file:"ch6.html",title:"Ch 6"}]},
     ];
 
+    /* ══ PAST EXAMS DATA ══
+       أضف هنا كل مادة عندها اختبارات سابقة
+       href = المسار على GitHub Pages
+    ══════════════════════ */
+    const pastExams=[
+      {name:"أمن الشبكات وتقنيات التشفير", code:"تال 1413", icon:"🛡️", color:"#0d9488",
+       desc:"أسئلة Quizzes + Midterms + Finals", href:"netsec/exams.html"},
+      // أضف المزيد هنا بنفس الشكل:
+      // {name:"اسم المادة", code:"الرمز", icon:"🔐", color:"#6366f1", desc:"وصف", href:"folder/exams.html"},
+    ];
+
+    function renderPastExams(){
+      const grid=document.getElementById('pastExamsGrid');
+      if(!pastExams.length){grid.innerHTML='<div style="color:var(--text-dim);font-size:.84rem;font-weight:600;padding:8px 0">لا توجد اختبارات سابقة بعد</div>';return}
+      grid.innerHTML=pastExams.map(p=>`
+        <a href="${p.href}" class="pe-card">
+          <div class="pe-emoji">${p.icon}</div>
+          <div class="pe-info">
+            <div class="pe-name">${p.name}</div>
+            <div class="pe-desc">${p.desc}</div>
+            <div class="pe-badge">📋 ${p.code}</div>
+          </div>
+          <div class="pe-arrow">←</div>
+        </a>`).join('');
+    }
+
     function getResult(folder,chFile){
-      try{
-        const raw=localStorage.getItem(`quiz_${folder}_${chFile.replace('.html','')}`);
-        return raw?JSON.parse(raw):null;
-      }catch(e){return null}
+      try{const raw=localStorage.getItem(`quiz_${folder}_${chFile.replace('.html','')}`);return raw?JSON.parse(raw):null}catch(e){return null}
     }
 
     function resetProgress(){
       if(!confirm('هل تريد حذف جميع النتائج المحفوظة؟'))return;
-      subjects.forEach(s=>s.chapters.forEach(ch=>{
-        localStorage.removeItem(`quiz_${s.folder}_${ch.file.replace('.html','')}`);
-      }));
+      subjects.forEach(s=>s.chapters.forEach(ch=>{localStorage.removeItem(`quiz_${s.folder}_${ch.file.replace('.html','')}`);}));
       location.reload();
     }
 
@@ -160,43 +205,22 @@
       const grid=document.getElementById('progressGrid');
       const badge=document.getElementById('overallBadge');
       let totalDone=0,totalAll=0,hasAny=false,html='';
-
       subjects.forEach(subj=>{
         let subjDone=0,scoreSum=0,dotsHtml='';
         subj.chapters.forEach((ch,i)=>{
-          const res=getResult(subj.folder,ch.file);
-          totalAll++;
-          if(res){
-            hasAny=true;subjDone++;totalDone++;
-            scoreSum+=(res.score/res.total)*100;
+          const res=getResult(subj.folder,ch.file);totalAll++;
+          if(res){hasAny=true;subjDone++;totalDone++;scoreSum+=(res.score/res.total)*100;
             const p=Math.round((res.score/res.total)*100);
             dotsHtml+=`<div class="ch-dot ${p===100?'star':'done'}" title="${ch.title}: ${res.score}/${res.total}">${i+1}</div>`;
-          } else {
-            dotsHtml+=`<div class="ch-dot" title="${ch.title}">${i+1}</div>`;
-          }
+          }else{dotsHtml+=`<div class="ch-dot" title="${ch.title}">${i+1}</div>`;}
         });
         const pct=Math.round((subjDone/subj.chapters.length)*100);
         const avg=subjDone>0?Math.round(scoreSum/subjDone):0;
         const barClass=subjDone===0?'':avg>=90?'perfect':avg>=70?'good':avg>=50?'mid':'low';
-        html+=`
-          <div class="prog-item">
-            <div class="prog-item-top">
-              <span class="prog-icon">${subj.icon}</span>
-              <span class="prog-name">${subj.name}</span>
-              ${subjDone>0?`<span class="prog-score">${avg}%</span>`:''}
-            </div>
-            <div class="prog-bar-wrap"><div class="prog-bar ${barClass}" style="width:${pct}%"></div></div>
-            <div class="prog-chapters">${dotsHtml}</div>
-          </div>`;
+        html+=`<div class="prog-item"><div class="prog-item-top"><span class="prog-icon">${subj.icon}</span><span class="prog-name">${subj.name}</span>${subjDone>0?`<span class="prog-score">${avg}%</span>`:''}</div><div class="prog-bar-wrap"><div class="prog-bar ${barClass}" style="width:${pct}%"></div></div><div class="prog-chapters">${dotsHtml}</div></div>`;
       });
-
-      if(hasAny){
-        grid.innerHTML=html;
-        badge.textContent=`✅ ${totalDone}/${totalAll} فصل — ${Math.round((totalDone/totalAll)*100)}%`;
-      } else {
-        grid.innerHTML='<div class="no-progress">ما حليت أي كويز بعد — ابدأ الآن! 🚀</div>';
-        badge.textContent='لا يوجد تقدم بعد';
-      }
+      if(hasAny){grid.innerHTML=html;badge.textContent=`✅ ${totalDone}/${totalAll} فصل — ${Math.round((totalDone/totalAll)*100)}%`;}
+      else{grid.innerHTML='<div class="no-progress">ما حليت أي كويز بعد — ابدأ الآن! 🚀</div>';badge.textContent='لا يوجد تقدم بعد';}
     }
 
     const container=document.getElementById("subjectsContainer");
@@ -205,23 +229,27 @@
       const header=document.createElement("div");header.className="subject-header";header.style.background=subj.color;
       header.innerHTML=`<span class="subject-icon">${subj.icon}</span> ${subj.name} <span class="subject-code">${subj.code}</span> <span class="arrow">▼</span>`;
       const chaptersDiv=document.createElement("div");chaptersDiv.className="chapters";
-
       subj.chapters.forEach((ch,i)=>{
         const res=getResult(subj.folder,ch.file);
         const pct=res?Math.round((res.score/res.total)*100):0;
         const a=document.createElement("a");
         a.className="ch-link"+(res?(pct===100?" perfect":" completed"):"");
         a.href=`${subj.folder}/${ch.file}`;
-        a.innerHTML=`
-          <div class="ch-num" style="background:${subj.color}">${i+1}</div>
-          <div class="ch-text">
-            <div class="ch-title">${ch.title}</div>
-            ${res?`<div class="ch-result">${pct===100?'⭐':'✅'} ${res.score}/${res.total} · ${res.date}</div>`:''}
-          </div>
-          <span class="ch-arrow">${res?(pct===100?'⭐':'✅'):'←'}</span>`;
+        a.innerHTML=`<div class="ch-num" style="background:${subj.color}">${i+1}</div><div class="ch-text"><div class="ch-title">${ch.title}</div>${res?`<div class="ch-result">${pct===100?'⭐':'✅'} ${res.score}/${res.total} · ${res.date}</div>`:''}</div><span class="ch-arrow">${res?(pct===100?'⭐':'✅'):'←'}</span>`;
         chaptersDiv.appendChild(a);
       });
+      // Quiz + Mid links
+      const quizLink=document.createElement("a");
+      quizLink.className="ch-link ch-exams ch-quiz";
+      quizLink.href=`${subj.folder}/quiz-exams.html`;
+      quizLink.innerHTML=`<div class="ch-num-exam" style="background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.45)">📝</div><div class="ch-text"><div class="ch-title">كويز</div><div class="ch-result" style="color:#818cf8">أسئلة Quizzes السابقة</div></div><span class="ch-arrow" style="color:#818cf8">←</span>`;
+      chaptersDiv.appendChild(quizLink);
 
+      const midLink=document.createElement("a");
+      midLink.className="ch-link ch-exams ch-mid";
+      midLink.href=`${subj.folder}/mid-exams.html`;
+      midLink.innerHTML=`<div class="ch-num-exam" style="background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.4)">📄</div><div class="ch-text"><div class="ch-title">ميد</div><div class="ch-result" style="color:#f59e0b">أسئلة Midterms السابقة</div></div><span class="ch-arrow" style="color:#f59e0b">←</span>`;
+      chaptersDiv.appendChild(midLink);
       header.addEventListener("click",()=>{header.classList.toggle("open");chaptersDiv.classList.toggle("open")});
       if(idx===0){header.classList.add("open");chaptersDiv.classList.add("open")}
       div.appendChild(header);div.appendChild(chaptersDiv);container.appendChild(div);
